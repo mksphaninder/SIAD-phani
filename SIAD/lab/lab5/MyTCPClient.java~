@@ -4,8 +4,6 @@ public class MyTCPClient{
 
 public static void main(String[] args) throws IOException {
 
-public static void main(String[] args) throws IOException {
-
 
 if(args.length !=2){
 	System.err.println("Usage : java MyTCPClient <host name> <port number>");
@@ -31,9 +29,12 @@ String userInput;
 
 while((userInput = stdIn.readLine()) !=null)
   {
+   
+   String message= stdIn.readLine();
+   while(!message.equals("exit"));{
    out.println(userInput);
    System.out.println("Received from server:"+ stdIn.readLine());
-   String message= stdIn.readLine();
+   }
    if(message.equals("exit")){
    socket.close();
    System.exit(0);

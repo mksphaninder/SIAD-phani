@@ -7,7 +7,7 @@ char password[100] ="";
 char *data = getenv("QUERY_STRING");// username
 //char *data1 = getnv
 sscanf(data,"name = %[^&]&password = %s",username,password);
-printf("%s",data);
+//printf("%s",data);
 if((username == "") || (password == "")){
 printf("Invalid username or password");
 }

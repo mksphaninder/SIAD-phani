@@ -72,9 +72,9 @@ int main(int argc, char *argv[]){
 	bytes_sent=send(sockfd, request, strlen(request),0);
 	//recieving the data
 	
-	char buffer[10000];//increalsed the size to store large data.
-	bzero(buffer, 10000); //Clearing the garbage data.
-	byte_received= recv(sockfd,buffer,10000,0);
+	char buffer[5000];//increalsed the size to store large data.
+	bzero(buffer, 5000); //Clearing the garbage data.
+	byte_received= recv(sockfd,buffer,5000,0);
 	//total_len += received_len;
 	if(byte_received<0){
 		error("ERROR reading from the socket");
@@ -94,11 +94,11 @@ int main(int argc, char *argv[]){
 		  	//getting the filename for the text file. from the path name.
 		  const char search1 = '/';// as it starts from '/'
 		  char *filename;//storing the name of file
-		  filename = strrchr(path_name, search1);
+		  filename = strrchr(argv[1], search1);
 		  //remaining bytes has the size of the size of the data part.
 		  if(filename != NULL){
 		  	  
-			  byte_received= recv(sockfd,buffer,10000,0);
+			  //byte_received= recv(sockfd,buffer,5000,0);
 			  FILE *fptr = fopen(filename+1, "w+");//excluding the the first '/'
 			  if(fptr == NULL)
 			  {
@@ -107,8 +107,7 @@ int main(int argc, char *argv[]){
 		  	  }
 		  	  remaining_bytes = byte_received-((ret-buffer)+4);
 			  fwrite(ret+4, remaining_bytes,1,fptr);// Excluding \r\n\r part.
-			  
-		  		while(byte_received = recv(sockfd,buffer,10000,0) != 0) {
+			  while(byte_received = recv(sockfd,buffer,5000,0) != 0) {
 			   		fwrite(buffer,byte_received,1,fptr);
 		 	 }
 		  fclose(fptr);
@@ -117,29 +116,20 @@ int main(int argc, char *argv[]){
 	  	  else{
 		  	//writing the contents into the file with filename as index.html
 		  FILE *fptr1; 
-		 fptr1 =fopen(filename, "w+");
+		 fptr1 =fopen("index.html", "w");
 		  //int remaining_bytes = byte_received-((ret-buffer)+4);
-		  if(fptr1 == NULL)
-			  {
-			        printf("\nfile opening error\n");
-			        exit(1);
-		  }
-		  	
 		  fwrite(ret+4, remaining_bytes,1,fptr1);
-		  while(byte_received = recv(sockfd,buffer,10000,0) != 0) {
-
+		  while(byte_received = recv(sockfd,buffer,5000,0) != 0) {
 			   fwrite(buffer,byte_received,1,fptr1);
 		  	}
 		  fclose(fptr1);
 		  }
 	}
-
 	else{
-			//printing the entire buffer as the status is not 200 OK
+		//printing the entire buffer as the status is not 200 OK
 		printf("\nThe message recieved is: %s", buffer);
 		printf("\n\n\n\nThe status is not 200 OK, Bye!!! =)\n\n");
 		exit(1);
-		
 	}
 	return 0;
 }

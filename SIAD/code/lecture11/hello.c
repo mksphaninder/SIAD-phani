@@ -1,17 +1,27 @@
 #include <stdio.h>
 int main(void){
-printf("content-Type: text/plain; charset = utf-8\n\n");
-printf("hello world\n");
-char username[100] ="";
-char password[100] ="";
-char *data = getenv("QUERY_STRING");// username
-//char *data1 = getnv
-sscanf(data,"name = %[^&]&password = %s",username,password);
-//printf("%s",data);
-if((username == "") || (password == "")){
-printf("Invalid username or password");
-}
-else
-printf("username is %s  password is %s",username,password);
+
+	printf("Content-Type: text/plain; charset = utf-8\n\n");
+	char *data = getenv("QUERY_STRING");// username
+	//printf("data=%s\n",data );
+	
+	printf("hello world\n");
+	char username[100] ="";
+	char password[100] ="";
+	char us[100] = "krishna";
+	char ps[100] = "krishna";
+	int ret;
+	int ret2;
+	sscanf(data,"name = %[^&]&password = %s",username,password);
+	ret = strncmp(username,us,7);
+	ret2 = strncmp(password,ps,7);
+	if (ret==0 && ret2==0)
+	{
+		printf("\n hello %s",username);
+	}
+	else{
+		printf("Acess denied");
+	}
+		
 return 0;
 }
